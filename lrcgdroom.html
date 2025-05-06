@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LRC GD Room Booking - BUnited</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1c1c1e;
+      color: white;
+      padding: 2rem;
+      margin: 0;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #5cc8ff;
+    }
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .room {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      padding: 1rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .room:hover {
+      background: rgba(92, 200, 255, 0.1);
+    }
+    .booking-form {
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 1rem;
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .booking-form input, .booking-form select, .booking-form button {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+    }
+    .booking-form button {
+      background-color: #00ffab;
+      color: black;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      cursor: pointer;
+    }
+    .no-rooms {
+      text-align: center;
+      margin-top: 3rem;
+      color: #ff6b6b;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>GD Room Booking</h2>
+
+  <div class="room-list" id="roomList">
+    <!-- Rooms will be generated here -->
+  </div>
+
+  <div id="noRooms" class="no-rooms" style="display: none;">No Rooms Available</div>
+
+  <script>
+    // Dummy rooms data
+    let rooms = [
+      { name: "GD Room 1", booked: false },
+      { name: "GD Room 2", booked: false },
+      { name: "GD Room 3", booked: false },
+      { name: "GD Room 4", booked: false },
+      { name: "GD Room 5", booked: false },
+      { name: "GD Room 6", booked: false }
+    ];
+
+    const roomList = document.getElementById('roomList');
+    const noRoomsDiv = document.getElementById('noRooms');
+
+    function renderRooms() {
+      roomList.innerHTML = '';
+      const availableRooms = rooms.filter(room => !room.booked);
+
+      if (availableRooms.length === 0) {
+        noRoomsDiv.style.display = 'block';
+      } else {
+        noRoomsDiv.style.display = 'none';
+      }
+
+      availableRooms.forEach((room, index) => {
+        const roomDiv = document.createElement('div');
+        roomDiv.className = 'room';
+        roomDiv.innerHTML = `
+          <strong>${room.name}</strong>
+          <div class="booking-form" id="form-${index}">
+            <input type="number" min="1" max="10" placeholder="Number of Students" required />
+            <select required>
+              <option value="">Select Time Slot</option>
+              <option value="1 Hour">1 Hour</option>
+              <option value="2 Hours">2 Hours</option>
+              <option value="3 Hours">3 Hours</option>
+            </select>
+            <button onclick="submitBooking(${index})">Submit Request</button>
+          </div>
+        `;
+        roomDiv.addEventListener('click', function(e) {
+          // Avoid opening form again if clicking on the form inside
+          if (!e.target.closest('.booking-form')) {
+            const form = document.getElementById(`form-${index}`);
+            const allForms = document.querySelectorAll('.booking-form');
+            allForms.forEach(f => f.style.display = 'none');
+            form.style.display = 'flex';
+          }
+        });
+        roomList.appendChild(roomDiv);
+      });
+    }
+
+    function submitBooking(index) {
+      const form = document.getElementById(`form-${index}`);
+      const numberInput = form.querySelector('input');
+      const timeSlotSelect = form.querySelector('select');
+
+      if (numberInput.value && timeSlotSelect.value) {
+        rooms = rooms.map((room, i) => i === index ? { ...room, booked: true } : room);
+        alert('Booking Request Sent for Approval!');
+        renderRooms();
+      } else {
+        alert('Please fill all details properly.');
+      }
+    }
+
+    // Initial Render
+    renderRooms();
+  </script>
+
+</body>
+</html>

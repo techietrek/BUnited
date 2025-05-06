@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laundry Booking - BUnited</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1c1c1e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      margin: 0;
+    }
+    .laundry-form-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .laundry-form-container h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #5cc8ff;
+    }
+    .laundry-form input[type="number"] {
+      width: 60px;
+      padding: 0.3rem;
+      border-radius: 10px;
+      border: none;
+      margin-left: 10px;
+    }
+    .laundry-form label {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+    .submit-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #00ffab;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    #qrcode {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="laundry-form-container">
+    <h2>Laundry Request</h2>
+
+    <form id="laundryForm" class="laundry-form">
+      <div id="clothing-options">
+        <label>Kurta <input type="number" name="Kurta" min="0" max="10"></label>
+        <label>Pajama <input type="number" name="Pajama" min="0" max="10"></label>
+        <label>Shirt <input type="number" name="Shirt" min="0" max="10"></label>
+        <label>T-Shirt <input type="number" name="TShirt" min="0" max="10"></label>
+        <label>Pant <input type="number" name="Pant" min="0" max="10"></label>
+        <label>Lower <input type="number" name="Lower" min="0" max="10"></label>
+        <label>Shorts <input type="number" name="Shorts" min="0" max="10"></label>
+        <label>Bedsheet <input type="number" name="Bedsheet" min="0" max="10"></label>
+        <label>Pillowcover <input type="number" name="Pillowcover" min="0" max="10"></label>
+        <label>Towel <input type="number" name="Towel" min="0" max="10"></label>
+        <label>Duppata <input type="number" name="Duppata" min="0" max="10"></label>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Laundry</button>
+      <div id="errorMsg" class="error"></div>
+    </form>
+
+    <div id="qrcode"></div>
+  </div>
+
+  <script>
+    // Fetching student info from localStorage
+    const studentName = localStorage.getItem('studentName') || 'Student Name';
+    const bagNo = localStorage.getItem('bagNo') || 'N/A';
+
+    // Form submission
+    document.getElementById('laundryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      let total = 0;
+      const inputs = document.querySelectorAll('#clothing-options input');
+      let clothesSummary = '';
+
+      inputs.forEach(input => {
+        const count = parseInt(input.value) || 0;
+        total += count;
+        if (count > 0) clothesSummary += `${input.name}: ${count}\n`;
+      });
+
+      if (total > 10) {
+        document.getElementById('errorMsg').innerText = 'You cannot submit more than 10 clothes.';
+      } else if (total === 0) {
+        document.getElementById('errorMsg').innerText = 'Please select at least 1 cloth.';
+      } else {
+        document.getElementById('errorMsg').innerText = '';
+        const qrData = `Name: ${studentName}\nBag No.: ${bagNo}\nTotal Clothes: ${total}\n${clothesSummary}`;
+        
+        // Generate QR Code
+        QRCode.toCanvas(document.createElement('canvas'), qrData, function (err, canvas) {
+          if (!err) {
+            const qrcodeDiv = document.getElementById('qrcode');
+            qrcodeDiv.innerHTML = ''; // clear previous QR if any
+            qrcodeDiv.appendChild(canvas);
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

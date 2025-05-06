@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luggage Cart Request - BUnited</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1c1c1e;
+      color: white;
+      padding: 2rem;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+      color: #5cc8ff;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: none;
+      margin-top: 0.5rem;
+    }
+    .submit-btn {
+      margin-top: 1.5rem;
+      background-color: #00ffab;
+      padding: 0.8rem;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .status-box {
+      margin-top: 2rem;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .pending { background-color: #ffeb3b33; color: #ffd600; }
+    .approved { background-color: #4caf5033; color: #00e676; }
+    .completed { background-color: #2196f333; color: #42a5f5; }
+    .timestamp {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Luggage Cart Request</h2>
+    <form id="luggageForm">
+      <label for="roomNo">Room Number</label>
+      <input type="text" id="roomNo" required>
+
+      <label for="reason">Reason for Request</label>
+      <textarea id="reason" rows="3" required></textarea>
+
+      <label for="imageUpload">Upload Image</label>
+      <input type="file" id="imageUpload" accept="image/*" required>
+
+      <button type="submit" class="submit-btn">Submit Request</button>
+    </form>
+
+    <div id="statusSection" style="display:none;">
+      <div id="statusBox" class="status-box pending">Status: Pending</div>
+      <div id="timestamp" class="timestamp"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('luggageForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const timestamp = new Date().toLocaleString();
+      document.getElementById('statusSection').style.display = 'block';
+      document.getElementById('timestamp').innerText = "Submitted on: " + timestamp;
+
+      // In actual app, you'd send this data to a server or admin panel
+      alert("Request Submitted!\n\nStatus: Pending\nTimestamp: " + timestamp);
+    });
+  </script>
+</body>
+</html>
+

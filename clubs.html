@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clubs - BUnited</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1c1c1e;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .club-container {
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .club-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+      text-align: center;
+      position: relative;
+    }
+
+    .club-card:hover {
+      transform: scale(1.02);
+    }
+
+    .club-title {
+      font-size: 1.3rem;
+      color: #5cc8ff;
+      margin-bottom: 0.5rem;
+    }
+
+    .club-desc {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+
+    .join-btn {
+      padding: 0.5rem 1.2rem;
+      background-color: #00ffab;
+      border: none;
+      color: black;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .join-form {
+      margin-top: 1rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .join-form input {
+      padding: 0.4rem;
+      margin: 0.3rem 0;
+      border-radius: 6px;
+      border: none;
+      width: 80%;
+    }
+
+    .submit-join {
+      margin-top: 0.5rem;
+      background-color: #5cc8ff;
+      color: black;
+      font-weight: bold;
+      padding: 0.4rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Explore and Join Clubs</h2>
+  <div class="club-container" id="clubContainer">
+    <!-- JS will insert clubs here -->
+  </div>
+
+  <script>
+    const clubs = [
+      { name: "Coding Club", desc: "Sharpen your coding skills." },
+      { name: "Robotics Club", desc: "Build and compete in tech challenges." },
+      { name: "Music Club", desc: "Jam with fellow musicians." },
+      { name: "Photography Club", desc: "Capture and tell stories visually." },
+      { name: "Dance Club", desc: "Move to the beat and express yourself." },
+      { name: "Drama Club", desc: "Perform, direct, and write plays." },
+      { name: "Literary Club", desc: "Explore poetry, debate, and literature." },
+      { name: "Gaming Club", desc: "Dive into competitive and casual gaming." },
+      { name: "Art Club", desc: "Paint, draw, and create masterpieces." },
+      { name: "Finance Club", desc: "Learn investing, trading, and finance basics." }
+    ];
+
+    const container = document.getElementById('clubContainer');
+    
+    clubs.forEach((club, index) => {
+      const card = document.createElement('div');
+      card.className = 'club-card';
+
+      card.innerHTML = `
+        <div class="club-title">${club.name}</div>
+        <div class="club-desc">${club.desc}</div>
+        <button class="join-btn" onclick="toggleForm(${index})">Join</button>
+        <div class="join-form" id="form-${index}">
+          <input type="text" placeholder="Your Name" id="name-${index}" required>
+          <input type="text" placeholder="Enrollment No." id="enroll-${index}" required>
+          <button class="submit-join" onclick="submitJoin(${index}, '${club.name}')">Submit</button>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    function toggleForm(index) {
+      const form = document.getElementById(`form-${index}`);
+      form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function submitJoin(index, clubName) {
+      const name = document.getElementById(`name-${index}`).value;
+      const enroll = document.getElementById(`enroll-${index}`).value;
+      if (name && enroll) {
+        alert(`Request submitted to join ${clubName}!\nName: ${name}\nEnrollment: ${enroll}`);
+        // TODO: Send this data to backend or store in localStorage
+        document.getElementById(`form-${index}`).style.display = 'none';
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+  </script>
+</body>
+</html>

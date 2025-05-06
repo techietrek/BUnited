@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - BUnited</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-body">
+  <div class="login-container glass">
+    <h2>Welcome Back!</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" class="login-form-btn">Login</button>
+      <p class="signup-link">New here? <a href="signup.html">Sign Up</a></p>
+
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if (email && password) {
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'dashboard.html';
+      }
+    });
+  </script>
+  <script>
+    const user = localStorage.getItem('bUnitedUser');
+    if (user) {
+      window.location.href = 'dashboard.html'; // Already logged in
+    }
+  </script>
+  
+</body>
+</html>

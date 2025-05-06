@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BUnited Dashboard</title>
+  <link rel="stylesheet" href="estyle.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+  <header class="main-header">
+    <div class="top-section">
+      <div class="logo"><span class="logo-blue">BU</span><span class="logo-green">nited</span></div>
+      <div class="notification-icon" onclick="toggleNotifications()">
+        🔔
+        <span class="notif-dot"></span>
+      </div>
+      
+    </div>
+    <hr class="full-line" />
+    <div class="logo-shade"></div>
+    <div id="notification-panel" class="notification-panel glass" style="display: none;">
+      <h4>Notifications</h4>
+      <ul>
+        <li>🛠 Maintenance in LRC from 3-5PM</li>
+        <li>📢 Club Fest registration ends tomorrow</li>
+        <li>🎯 Laundry slots full till 6PM today</li>
+      </ul>
+    </div>
+    
+  </header>
+
+  <main class="dashboard-main">
+    <div class="button-wrapper">
+      <div class="dashboard-card glass">
+        <div class="card-header" onclick="toggleDropdown('academia-dropdown')">
+          Academia ▼
+        </div>
+        <div id="academia-dropdown" class="dropdown-content">
+          <a href="sections/lrcgdroom.html">LRC GD Room</a>
+          <a href="sections/clubs.html">Clubs</a>
+        </div>
+      </div>
+
+      <div class="dashboard-card glass">
+        <div class="card-header" onclick="toggleDropdown('hostel-dropdown')">
+          Hostel ▼
+        </div>
+        <div id="hostel-dropdown" class="dropdown-content">
+          <a href="sections/laundry.html">Laundry</a>
+          <a href="sections/luggage.html">Luggage Cart</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="extra-info glass">
+      <h3>What's New?</h3>
+      <ul>
+        <li>🔔 Notifications section coming soon!</li>
+        <li>🎉 Event participation tracker in progress.</li>
+        <li>💬 Chat support launching this month.</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 BUnited. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleDropdown(id) {
+      const dropdown = document.getElementById(id);
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+  <script>
+    function toggleDropdown(id) {
+      const dropdown = document.getElementById(id);
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  
+    function toggleNotifications() {
+      const panel = document.getElementById('notification-panel');
+      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+  <!-- <script>
+    const user = JSON.parse(localStorage.getItem('bUnitedUser'));
+    if (!user) {
+      // If no user found, redirect to login
+      window.location.href = 'login.html';
+    } else {
+      // Example: Inject user data
+      document.getElementById('welcome-msg').textContent = `Welcome, ${user.name}`;
+    }
+  </script> -->
+  
+</body>
+</html>
