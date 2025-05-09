@@ -27,5 +27,3 @@
 
 ---
 
-## 📂 Project Structure
-
